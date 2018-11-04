@@ -3,41 +3,55 @@
  */
 
 // Dependencies
-var http = require("http");
-var url = require("url");
+const http = require("http");
+const url = require("url");
+const StringDecoder = require("string_decoder").StringDecoder;
 
 // The server should respond to all requests with a string
-var server = http.createServer(function(req,res){
+const server = http.createServer(function (req, res) {
 
     // Get url and parse it.
-    var parseURL = url.parse(req.url, true);
+    const parseURL = url.parse(req.url, true);
 
     // Get path
-    var path = parseURL.pathname;
-    var trimPath = path.replace(/^\/+|\/+$/g, '');
+    const path = parseURL.pathname;
+    const trimPath = path.replace(/^\/+|\/+$/g, '');
 
     // Get the query string as an object
-    var queryStringObject = parseURL.query;
+    const queryStringObject = parseURL.query;
 
     // Get the HTTP Method
-    var method = req.method.toLowerCase();
+    const method = req.method.toLowerCase();
 
     // Get the headers as an object
-    var headers = req.headers;
+    const headers = req.headers;
 
-    // send to response
-    res.end("Hello World\n");
+    // Get the payload, if any
+    const decoder = new StringDecoder("utf-8");
+    let buffer = "";
 
-    // log the request path.
-    console.log(`
-    Request received on path: ${trimPath}.
-    Request was w/ this method: ${method}.
-    Query string parameters: ${JSON.stringify(queryStringObject)}.
-    Request received w/ headers: ${JSON.stringify(headers)};
-    `);
+    req.on("data", function (data) {
+        buffer += decoder.write(data);
+    });
+
+    req.on("end", function () {
+        buffer += decoder.end();
+
+        // send to response
+        res.end("Hello World\n");
+
+        // log the request path.
+        console.log(`
+            Request received on path: ${trimPath}.
+            Request was w/ this method: ${method}.
+            Query string parameters: ${JSON.stringify(queryStringObject)}.
+            Request received w/ headers: ${JSON.stringify(headers)};
+            Request received w/ payload: ${buffer};
+        `);
+    });
 });
 
-// Srart the server, and have it listen on port 3000
-server.listen(3000, function() {
+// Start the server, and have it listen on port 3000
+server.listen(3000, function () {
     console.log("The server is listening on port 3000 now.");
 });

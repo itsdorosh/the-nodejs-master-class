@@ -22,6 +22,9 @@ var server = http.createServer(function(req,res){
     // Get the HTTP Method
     var method = req.method.toLowerCase();
 
+    // Get the headers as an object
+    var headers = req.headers;
+
     // send to response
     res.end("Hello World\n");
 
@@ -29,7 +32,8 @@ var server = http.createServer(function(req,res){
     console.log(`
     Request received on path: ${trimPath}.
     Request was w/ this method: ${method}.
-    Query string parameters: ${JSON.stringify(queryStringObject)};
+    Query string parameters: ${JSON.stringify(queryStringObject)}.
+    Request received w/ headers: ${JSON.stringify(headers)};
     `);
 });
 

@@ -5,7 +5,6 @@
 // Dependencies
 const http = require("http");
 const https = require("https");
-const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 const config = require("./config");
 const fs = require("fs");
@@ -13,7 +12,7 @@ const fs = require("fs");
 // All the server logic for doth the http and https server
 const unifiedServer = function (req, res) {
   // Get url and parse it.
-  const parseURL = url.parse(req.url, true);
+  const parseURL = new URL(req.url, 'http://localhost:3000');
 
   // Get path
   const path = parseURL.pathname;
@@ -88,7 +87,7 @@ const httpServer = http.createServer(unifiedServer);
 // Instantiate the HTTPS server
 const httpsServerOptions = {
   "key": fs.readFileSync("./https/key.pem"),
-  "cert": fs.readFileSync("./https/cert.pem")
+  "cert": fs.readFileSync("./https/cert.pem"),
 };
 const httpsServer = https.createServer(httpsServerOptions, unifiedServer);
 

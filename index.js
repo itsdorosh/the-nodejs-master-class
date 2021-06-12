@@ -8,6 +8,8 @@ const https = require("https");
 const StringDecoder = require("string_decoder").StringDecoder;
 const config = require("./config");
 const fs = require("fs");
+const handlers = require("./lib/handlers");
+const helpers = require('./lib/helpers');
 
 // All the server logic for doth the http and https server
 const unifiedServer = function (req, res) {
@@ -19,7 +21,7 @@ const unifiedServer = function (req, res) {
   const trimPath = path.replace(/^\/+|\/+$/g, '');
 
   // Get the query string as an object
-  const queryStringObject = parseURL.query;
+  const queryStringObject = parseURL.searchParams;
 
   // Get the HTTP Method
   const method = req.method.toLowerCase();
@@ -47,7 +49,7 @@ const unifiedServer = function (req, res) {
       queryStringObject,
       method,
       headers,
-      buffer
+      payload: helpers.parseJsonToObject(buffer)
     };
 
     // Route the request to the handler specify in the router
@@ -101,18 +103,7 @@ httpsServer.listen(config.httpsPort, function () {
   console.log(`The server is listening on port ${config.httpsPort} in ${config.envName} now.`);
 });
 
-// Define a request router
-const handlers = {};
-
-// Ping handler
-handlers.ping = function (data, callback) {
-  callback(200);
-};
-
-handlers.notFound = function (data, callback) {
-  callback(404);
-};
-
 const router = {
-  "ping": handlers.ping
+  "ping": handlers.ping,
+  "users": handlers.users,
 };

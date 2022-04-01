@@ -6,9 +6,10 @@
 const http = require("http");
 const https = require("https");
 const StringDecoder = require("string_decoder").StringDecoder;
+import {readFileSync} from "fs";
+
 const config = require("./config");
-const fs = require("fs");
-const handlers = require("./lib/handlers");
+import {handlers} from "./lib/handlers.js";
 const helpers = require('./lib/helpers');
 
 // All the server logic for doth the http and https server
@@ -88,8 +89,8 @@ const httpServer = http.createServer(unifiedServer);
 
 // Instantiate the HTTPS server
 const httpsServerOptions = {
-  "key": fs.readFileSync("./https/key.pem"),
-  "cert": fs.readFileSync("./https/cert.pem"),
+  "key": readFileSync("./https/key.pem"),
+  "cert": readFileSync("./https/cert.pem"),
 };
 const httpsServer = https.createServer(httpsServerOptions, unifiedServer);
 

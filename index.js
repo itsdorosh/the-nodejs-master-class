@@ -3,14 +3,14 @@
  */
 
 // Dependencies
-import { createServer as createHttpServer } from "http";
-import { createServer as createHttpsServer } from "https";
-import { StringDecoder } from "string_decoder";
-import { readFileSync } from "fs";
+import {createServer as createHttpServer} from "http";
+import {createServer as createHttpsServer} from "https";
+import {StringDecoder} from "string_decoder";
+import {readFileSync} from "fs";
 
-import { environmentToExport as config } from "./config.js";
-import { handlers } from "./lib/handlers.js";
-import { helpers } from "./lib/helpers.js";
+import {environmentToExport as config} from "./config.js";
+import {handlers} from "./lib/handlers.js";
+import {helpers} from "./lib/helpers.js";
 
 // All the server logic for doth the http and https server
 const unifiedServer = function (req, res) {

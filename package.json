@@ -4,7 +4,6 @@
   "description": "My learning process of the course 'The Node.js Master Class'",
   "type": "module",
   "main": "index.js",
-  
   "directories": {
     "lib": "lib"
   },

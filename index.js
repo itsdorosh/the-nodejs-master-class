@@ -77,7 +77,7 @@ const unifiedServer = function (req, res) {
     console.log(`
 Request received on path: ${trimPath}
 Request was w/ this method: ${method}
-Query string parameters: ${JSON.stringify(queryStringObject)}
+Query string parameters: ${queryStringObject}
 Request received w/ headers: ${JSON.stringify(headers)}
 Request received w/ payload: ${buffer}
         `);
@@ -94,14 +94,16 @@ const httpsServerOptions = {
 };
 const httpsServer = createHttpsServer(httpsServerOptions, unifiedServer);
 
+console.clear();
+
 // Start the HTTP server
 httpServer.listen(config.httpPort, function () {
-  console.log(`The server is listening on port ${config.httpPort} in ${config.envName} now.`);
+  console.log(`The HTTP server is listening on port ${config.httpPort} in ${config.envName} now.`);
 });
 
 // Start the HTTPS server
 httpsServer.listen(config.httpsPort, function () {
-  console.log(`The server is listening on port ${config.httpsPort} in ${config.envName} now.`);
+  console.log(`The HTTPS server is listening on port ${config.httpsPort} in ${config.envName} now.`);
 });
 
 const router = {

@@ -15,7 +15,7 @@ import { helpers } from "./lib/helpers.js";
 // All the server logic for doth the http and https server
 const unifiedServer = function (req, res) {
   // Get url and parse it.
-  const parseURL = new URL(req.url, 'http://localhost:3000');
+  const parseURL = new URL(req.url, "http://localhost:3000");
 
   // Get path
   const path = parseURL.pathname;
@@ -42,7 +42,7 @@ const unifiedServer = function (req, res) {
     buffer += decoder.end();
 
     // Choose the handler this request should go to.
-    const chosenHandler = typeof (router[trimPath]) !== 'undefined' ? router[trimPath] : handlers.notFound;
+    const chosenHandler = typeof (router[trimPath]) !== "undefined" ? router[trimPath] : handlers.notFound;
 
     // Construct the data object to send to the handler
     const data = {

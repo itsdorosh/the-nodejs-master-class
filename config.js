@@ -27,9 +27,6 @@ const currentEnvironment = typeof (process.env.NODE_ENV) === "string"
   : '';
 
 // Check that the current environment is one of the environments above, if not, default
-const environmentToExport = typeof (environments[currentEnvironment]) === "object"
+export const environmentToExport = typeof (environments[currentEnvironment]) === "object"
   ? environments[currentEnvironment]
   : environments.staging;
-
-// export the module
-module.exports = environmentToExport;

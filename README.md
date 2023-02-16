@@ -1,5 +1,10 @@
 # Pirple - The Node.js Master Class
 
+## Before run:
+1. generate certificates for HTTPS server
+2. create directory for data in following path `{repoRoot}/.data/`
+2. create directory for users in following path `{repoRoot}/.data/users/`
+
 #### For generation of cert.pem & key.pem use:
 
 ```shell

@@ -3,14 +3,14 @@
  */
 
 // Dependencies
-const http = require("http");
-const https = require("https");
-const StringDecoder = require("string_decoder").StringDecoder;
-import {readFileSync} from "fs";
+import { createServer as createHttpServer } from "http";
+import { createServer as createHttpsServer } from "https";
+import { StringDecoder } from "string_decoder";
+import { readFileSync } from "fs";
 
-const config = require("./config");
-import {handlers} from "./lib/handlers.js";
-const helpers = require('./lib/helpers');
+import { environmentToExport as config } from "./config.js";
+import { handlers } from "./lib/handlers.js";
+import { helpers } from "./lib/helpers.js";
 
 // All the server logic for doth the http and https server
 const unifiedServer = function (req, res) {
@@ -85,14 +85,14 @@ Request received w/ payload: ${buffer}
 };
 
 // Instantiate the HTTP server
-const httpServer = http.createServer(unifiedServer);
+const httpServer = createHttpServer(unifiedServer);
 
 // Instantiate the HTTPS server
 const httpsServerOptions = {
   "key": readFileSync("./https/key.pem"),
   "cert": readFileSync("./https/cert.pem"),
 };
-const httpsServer = https.createServer(httpsServerOptions, unifiedServer);
+const httpsServer = createHttpsServer(httpsServerOptions, unifiedServer);
 
 // Start the HTTP server
 httpServer.listen(config.httpPort, function () {

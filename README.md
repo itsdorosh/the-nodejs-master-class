@@ -4,8 +4,7 @@
 
 1. generate certificates for HTTPS server
 2. create directory for data in following path `{repoRoot}/.data/`
-3. create directory for users in following path `{repoRoot}/.data/users/`
-
+3. create directories for users, tokens and checks within `{repoRoot}/.data/` folder
 #### For generation of cert.pem & key.pem use:
 
 ```shell
